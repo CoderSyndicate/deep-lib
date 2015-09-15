@@ -2,8 +2,8 @@
   "name": "deep-lib",
   "license": "MIT",
   "version": "0.0.1",
-  "homepage": "https://github.com/luscus/deep-lib",
-  "author": "https://github.com/luscus/deep-lib/graphs/contributors",
+  "homepage": "https://github.com/CoderSyndicate/deep-lib",
+  "author": "https://github.com/CoderSyndicate/deep-lib/graphs/contributors",
   "description": "Enables to manipulate data and its substructures using dot separated property paths",
   "keywords": [
     "object",
@@ -27,12 +27,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/luscus/deep-lib.git"
+    "url": "git://github.com/CoderSyndicate/deep-lib.git"
   },
   "scripts": {
     "test": "gulp test"
   },
-  "bugs": "https://github.com/luscus/deep-lib/issues",
+  "bugs": "https://github.com/CoderSyndicate/deep-lib/issues",
   "main": "./lib/deep-lib.js",
   "dependencies": {
     "clone": "^1.0.2",

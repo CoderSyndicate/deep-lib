@@ -5,9 +5,9 @@
 [![NPM license](https://img.shields.io/npm/l/deep-lib.svg?style=flat)](https://www.npmjs.com/package/deep-lib "View this project on NPM")
 [![flattr](https://img.shields.io/badge/flattr-donate-yellow.svg?style=flat)](http://flattr.com/thing/3817419/luscus-on-GitHub)
 
-![coverage](https://cdn.rawgit.com/luscus/deep-lib/master/reports/coverage.svg)
-[![David](https://img.shields.io/david/luscus/deep-lib.svg?style=flat)](https://david-dm.org/luscus/deep-lib)
-[![David](https://img.shields.io/david/dev/luscus/deep-lib.svg?style=flat)](https://david-dm.org/luscus/deep-lib#info=devDependencies)
+![coverage](https://cdn.rawgit.com/CoderSyndicate/deep-lib/master/reports/coverage.svg)
+[![David](https://img.shields.io/david/CoderSyndicate/deep-lib.svg?style=flat)](https://david-dm.org/CoderSyndicate/deep-lib)
+[![David](https://img.shields.io/david/dev/CoderSyndicate/deep-lib.svg?style=flat)](https://david-dm.org/CoderSyndicate/deep-lib#info=devDependencies)
 
 Enables to manipulate data and its substructures using dot separated property paths.
 
