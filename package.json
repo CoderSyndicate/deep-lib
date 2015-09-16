@@ -19,11 +19,16 @@
     "get",
     "manipulation"
   ],
+  "dependencies": {
+    "clone": "*",
+    "deep-diff": "*",
+    "deep-equal": "*"
+  },
   "devDependencies": {
-    "gulp": "3.9.0",
-    "gulpfile.basics": "0.0.3",
-    "chai": "3.0.0",
-    "mocha": "2.2.5"
+    "gulp": "*",
+    "gulpfile.basics": "*",
+    "chai": "*",
+    "mocha": "*"
   },
   "repository": {
     "type": "git",
@@ -33,10 +38,5 @@
     "test": "gulp test"
   },
   "bugs": "https://github.com/CoderSyndicate/deep-lib/issues",
-  "main": "./lib/deep-lib.js",
-  "dependencies": {
-    "clone": "^1.0.2",
-    "deep-diff": "^0.3.2",
-    "deep-equal": "^1.0.1"
-  }
+  "main": "./lib/deep-lib.js"
 }
