@@ -409,3 +409,29 @@ describe('[' + require('path').basename(__filename) + '] - getPaths ', function(
     ]);
   });
 });
+
+describe('[' + require('path').basename(__filename) + '] - select ', function() {
+  var clone = deep.clone(data);
+
+  it('should return only value paths ending with "name": /.*\\.name$/', function() {
+
+    var paths = deep.select(clone, /.*\.name$/);
+
+    expect(paths).to.deep.equal([
+      'countries.germany.towns.berlin.name',
+      'countries.germany.towns.hamburg.name',
+      'countries.spain.towns.0.name',
+      'countries.spain.towns.1.name'
+    ]);
+  });
+
+  it('should return only value paths ending with "name" from substructure: /.*\\.name$/', function() {
+
+    var paths = deep.select(clone, /.*\.name$/, 'countries.germany');
+
+    expect(paths).to.deep.equal([
+      'towns.berlin.name',
+      'towns.hamburg.name'
+    ]);
+  });
+});
