@@ -1,18 +1,18 @@
 {
   "name": "deep-lib",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "clone": {
       "version": "1.0.2",
-      "from": "clone@"
+      "from": "clone@1.0.2"
     },
     "deep-diff": {
       "version": "0.3.2",
-      "from": "deep-diff@"
+      "from": "deep-diff@0.3.2"
     },
     "deep-equal": {
       "version": "1.0.1",
-      "from": "deep-equal@"
+      "from": "deep-equal@1.0.1"
     }
   }
 }

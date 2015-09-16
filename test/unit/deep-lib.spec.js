@@ -60,7 +60,7 @@ describe('[' + require('path').basename(__filename) + '] - clone ', function() {
   });
 
   it('should work with substructures', function() {
-    var clone = deep.clone(data.countries.germany);
+    var clone = deep.clone(data, 'countries.germany');
     expect(clone).to.deep.equal(data.countries.germany);
   });
 });
@@ -340,9 +340,8 @@ describe('[' + require('path').basename(__filename) + '] - same ', function() {
   });
 
   it('should find germany identical to itself', function() {
-    var germany = deep.get(clone, 'countries.germany');
 
-    var areEqual = deep.same(germany, clone.countries.germany);
+    var areEqual = deep.same(clone, clone, 'countries.germany');
     expect(areEqual).to.equal(true);
   });
 });
