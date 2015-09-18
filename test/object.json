@@ -1,0 +1,38 @@
+{
+  "countries": {
+    "germany": {
+      "towns": {
+        "capital": "berlin",
+        "berlin": {
+          "name": "Berlin",
+          "population": 3562166,
+          "area": 891.85
+        },
+        "hamburg": {
+          "name": "Hamburg",
+          "population": 1751775,
+          "area": 755
+        }
+      }
+    },
+    "spain": {
+      "sites": [
+        "Alhambra",
+        "Cabo de Gata"
+      ],
+      "capital": "Madrid",
+      "towns": [
+        {
+          "name": "Madrid",
+          "population": 3165235,
+          "area": 605.770
+        },
+        {
+          "name": "Barcelona",
+          "population": 1751775,
+          "area": 755
+        }
+      ]
+    }
+  }
+}

@@ -1,45 +1,7 @@
 var should   = require('chai').should();
 var expect   = require('chai').expect;
 var deep     = require('../../lib/deep-lib');
-
-var data = {
-  "countries": {
-    "germany": {
-      "towns": {
-        "capital": "berlin",
-        "berlin": {
-          "name": "Berlin",
-          "population": 3562166,
-          "area": 891.85
-        },
-        "hamburg": {
-          "name": "Hamburg",
-          "population": 1751775,
-          "area": 755
-        }
-      }
-    },
-    "spain": {
-      "sites": [
-          "Alhambra",
-          "Cabo de Gata"
-      ],
-      "capital": "Madrid",
-      "towns": [
-        {
-          "name": "Madrid",
-          "population": 3165235,
-          "area": 605.770
-        },
-        {
-          "name": "Barcelona",
-          "population": 1751775,
-          "area": 755
-        }
-      ]
-    }
-  }
-};
+var data     = require('../object.json');
 
 describe('[' + require('path').basename(__filename) + '] - clone ', function() {
   var clone = deep.clone(data);
