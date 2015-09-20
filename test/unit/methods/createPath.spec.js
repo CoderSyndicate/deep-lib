@@ -7,31 +7,48 @@
 /* global it */
 "use strict";
 
-console.log(__filename);
-var should   = require('chai').should();
 var expect   = require('chai').expect;
+var diffLib  = require('deep-diff');
 var deep     = require('../../../lib/deep-lib');
 var data     = require('../../object.json');
 
-var createProperty = require('../../../lib/methods/createProperty').createProperty;
+var createPath = require('../../../lib/methods/createPath').createPath;
+var errorCodes = require('../../../lib/methods/createPath').errorCodes;
 
-describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - createProperty ', function() {
-    var clone = deep.clone(data);
+describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - createPath ', function() {
 
-    it('should do nothing if provided value is undefined', function() {
-        createProperty(clone, 'propOnRoot');
-        expect(clone).to.deep.equal(data);
+    it('should create root object: object1', function() {
+        var clone = deep.clone(data);
+
+        createPath(clone, 'object1');
+
+        var diff = diffLib(data, clone);
+
+        expect(clone).to.not.deep.equal(data);
+        expect(diff).to.deep.equal(
+          [{"kind": "N","path": ["object1"],"rhs": {}}]
+        );
     });
 
-    it('should have the same structure', function() {
-        expect(clone).to.deep.equal(data);
+
+    it('should throw error if first path element for an object is an array: 0', function() {
+        var clone = deep.clone(data);
+
+        expect(createPath.bind(this,clone, '0')).to.throw(errorCodes.INVALID_FIRST_PATH_ELEMENT);
     });
 
-    it('should not change source object', function() {
-        clone.countries.germany.towns.capital = 'hamburg';
+    it('should create array element if root is an array', function() {
+        var clone = deep.clone(data);
 
-        expect(clone.countries.germany.towns.capital).to.not.equal(data.countries.germany.towns.capital);
-        expect(data.countries.germany.towns.capital).to.equal('berlin');
+        createPath(clone.countries.spain.sites, '0');
+
+        var diff = diffLib(data, clone);
+        console.log(clone.countries.spain);
+
+        expect(clone).to.not.deep.equal(data);
+        expect(diff).to.deep.equal(
+          [{"kind": "N","path": ["object1"],"rhs": {}}]
+        );
     });
 
     it('should work with substructures', function() {

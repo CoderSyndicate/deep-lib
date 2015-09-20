@@ -7,7 +7,6 @@
 /* global it */
 "use strict";
 
-var should   = require('chai').should();
 var expect   = require('chai').expect;
 var diffLib  = require('deep-diff');
 var deep     = require('../../../lib/deep-lib');
