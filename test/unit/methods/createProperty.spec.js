@@ -69,13 +69,10 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
     it('should create deep properties using a rebased root: property in countries.germany', function() {
         var clone = deep.clone(data);
 
-        console.log('before create property:' ,clone.countries.germany);
         createProperty(clone, 'property', 'worked!', 'countries.germany');
 
         var diff = diffLib(data, clone);
 
-        console.log('after create property:' ,clone.countries.germany);
-        console.log(JSON.stringify(diff));
         expect(clone).to.not.deep.equal(data);
         expect(diff).to.deep.equal(
             [{"kind":"N","path":["countries","germany","property"],"rhs":"worked!"}]
