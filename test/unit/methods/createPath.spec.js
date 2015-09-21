@@ -44,7 +44,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
             .to.throw(errorCodes.ARRAY_INVALID_FIRST_PATH_ELEMENT);
     });
 
-    it('should append new array element if first path element is a property: '+tools.arrayPlaceholder+'.prop1', function() {
+    it('should push new array element if first path element is an array placeholder: '+tools.arrayPlaceholder+'.prop1', function() {
         var clone = deep.clone(data);
 
         createPath(clone.countries.spain.sites, tools.arrayPlaceholder + '.prop1');
@@ -54,6 +54,32 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
         expect(clone).to.not.deep.equal(data);
         expect(diff).to.deep.equal(
             [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":{"prop1":{}}}}]
+        );
+    });
+
+    it('should push new array element if first path element is an array push placeholder: '+tools.arrayPush+'.prop1', function() {
+        var clone = deep.clone(data);
+
+        createPath(clone.countries.spain.sites, tools.arrayPush + '.prop1');
+
+        var diff = diffLib(data, clone);
+
+        expect(clone).to.not.deep.equal(data);
+        expect(diff).to.deep.equal(
+            [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":{"prop1":{}}}}]
+        );
+    });
+
+    it('should unshift new array element if first path element is an array unshift placeholder: '+tools.arrayUnshift+'.prop1', function() {
+        var clone = deep.clone(data);
+
+        createPath(clone.countries.spain.sites, tools.arrayUnshift + '.prop1');
+
+        var diff = diffLib(data, clone);
+
+        expect(clone).to.not.deep.equal(data);
+        expect(diff).to.deep.equal(
+            [{"kind":"E","path":["countries","spain","sites",0],"lhs":"Alhambra","rhs":{"prop1":{}}},{"kind":"E","path":["countries","spain","sites",1],"lhs":"Cabo de Gata","rhs":"Alhambra"},{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":"Cabo de Gata"}}]
         );
     });
 
@@ -83,10 +109,10 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
         );
     });
 
-    it('should create deep object behind an array: 0.lvl1.lvl2', function() {
+    it('should create deep object behind an array: 0.lvl1.lvl2 rebasing root to countries.spain.sites', function() {
         var clone = deep.clone(data);
 
-        createPath(clone.countries.spain.sites, '0.lvl1.lvl2');
+        createPath(clone, '0.lvl1.lvl2', 'countries.spain.sites');
 
         var diff = diffLib(data, clone);
 
