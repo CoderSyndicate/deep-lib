@@ -23,7 +23,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
         expect(clone).to.deep.equal(data);
     });
 
-    it('should create root properties', function() {
+    it('should create root properties: propOnRoot', function() {
         var clone = deep.clone(data);
         var value = 'worked!';
 
@@ -38,7 +38,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
         expect(clone.propOnRoot).to.equal(value);
     });
 
-    it('should create deep properties', function() {
+    it('should create deep properties: root.depth1.0.property', function() {
         var clone = deep.clone(data);
 
         createProperty(clone, 'root.depth1.0.property', 'worked!', {
@@ -46,10 +46,10 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
         });
 
         var diff = diffLib(data, clone);
-        console.log(clone);
-        console.log(diff[0].rhs);
 
         expect(clone).to.not.deep.equal(data);
-        expect(diff).to.deep.equal([ { kind: 'N', path: [ 'propOnRoot' ], rhs: 'isRoot' } ]);
+        expect(diff).to.deep.equal(
+            [{"kind":"N","path":["root"],"rhs":{"depth1":[{"property":"worked!"}]}}]
+        );
     });
 });

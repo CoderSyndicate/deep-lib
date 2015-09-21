@@ -112,8 +112,8 @@ describe('[' + require('path').basename(__filename) + '] - add ', function() {
   });
 
   it('should create an array element to add a value', function() {
-    deep.add(clone, 'countries.spain.sites.2.website', 'http://www.madrid.es');
-    var control = deep.get(clone, 'countries.spain.sites.2.website');
+    deep.add(clone, 'countries.spain.towns.2.website', 'http://www.madrid.es');
+    var control = deep.get(clone, 'countries.spain.towns.2.website');
 
     expect(control).to.equal('http://www.madrid.es');
   });
