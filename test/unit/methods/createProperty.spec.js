@@ -12,14 +12,14 @@ var diffLib  = require('deep-diff');
 var deep     = require('../../../lib/deep-lib');
 var data     = require('../../object.json');
 
-var createProperty = require('../../../lib/methods/createProperty').createProperty;
+var defineProperty = require('../../../lib/methods/defineProperty').defineProperty;
 
-describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - createProperty ', function() {
+describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - defineProperty ', function() {
 
     it('should do nothing if provided value is undefined', function() {
         var clone = deep.clone(data);
 
-        createProperty(clone, 'propOnRoot');
+        defineProperty(clone, 'propOnRoot');
         expect(clone).to.deep.equal(data);
     });
 
@@ -27,7 +27,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
         var clone = deep.clone(data);
         var value = 'worked!';
 
-        createProperty(clone, 'propOnRoot', value, {
+        defineProperty(clone, 'propOnRoot', value, {
             enumerable:   true // otherwise not visible to diff
         });
 
@@ -41,7 +41,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
     it('should create deep properties with default options: root.depth1.0.property', function() {
         var clone = deep.clone(data);
 
-        createProperty(clone, 'root.depth1.0.property', 'worked!');
+        defineProperty(clone, 'root.depth1.0.property', 'worked!');
 
         var diff = diffLib(data, clone);
 
@@ -54,7 +54,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
     it('should create deep properties: root.depth1.0.property', function() {
         var clone = deep.clone(data);
 
-        createProperty(clone, 'root.depth1.0.property', 'worked!', {
+        defineProperty(clone, 'root.depth1.0.property', 'worked!', {
             enumerable:   true // otherwise not visible to diff
         });
 
@@ -69,7 +69,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
     it('should create deep properties using a rebased root: property in countries.germany', function() {
         var clone = deep.clone(data);
 
-        createProperty(clone, 'property', 'worked!', 'countries.germany');
+        defineProperty(clone, 'property', 'worked!', 'countries.germany');
 
         var diff = diffLib(data, clone);
 
