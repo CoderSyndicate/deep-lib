@@ -1,7 +1,7 @@
 {
   "name": "deep-lib",
   "license": "MIT",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/CoderSyndicate/deep-lib",
   "author": "https://github.com/CoderSyndicate/deep-lib/graphs/contributors",
   "description": "Enables to manipulate data and its substructures using dot separated property paths",
