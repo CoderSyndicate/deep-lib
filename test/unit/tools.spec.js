@@ -7,14 +7,14 @@
 /* global it */
 "use strict";
 
-var should    = require('chai').should();
 var expect    = require('chai').expect;
 var tools     = require('../../lib/tools');
 
 var testPath  = 'root' + tools.sep + 'depth1' + tools.sep + 'depth2' + tools.sep + 'property';
 
+describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - method ', function() {
 
-describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - split ', function() {
+describe('split ', function() {
 
     it('should return an empty array if no path was provided', function() {
         var result = tools.split();
@@ -29,7 +29,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - spl
     });
 });
 
-describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - join ', function() {
+describe('join ', function() {
 
     it('should join path elements', function() {
         var array  = tools.split(testPath);
@@ -39,7 +39,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - joi
     });
 });
 
-describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - dirname ', function() {
+describe('dirname ', function() {
 
     it('should return the path argument if it has no depth', function() {
         var result = tools.dirname('root');
@@ -55,7 +55,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - dir
     });
 });
 
-describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - basename ', function() {
+describe('basename ', function() {
 
     it('should return the path argument if it has no depth', function() {
         var result = tools.basename('root');
@@ -70,4 +70,5 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - bas
 
         expect(result).to.equal(lastElement);
     });
+});
 });
