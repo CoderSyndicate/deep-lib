@@ -12,7 +12,7 @@ var rename = require("gulp-rename");
 var concat = require("gulp-concat");
 
 gulp.task("docs", function(){
-  return gulp.src("lib/*.js")
+  return gulp.src("lib/**/*.js")
     .pipe(gulpJsdoc2md({}))
     .on("error", function(err){
       gutil.log(gutil.colors.red("jsdoc2md failed"), err.message)
