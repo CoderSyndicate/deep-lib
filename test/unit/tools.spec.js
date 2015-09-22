@@ -1,6 +1,5 @@
 /* jshint node:true */
 /* jshint expr:true*/
-/* jshint -W024 */
 /* global __filename */
 /* global require */
 /* global process */
@@ -41,32 +40,55 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - met
     });
   });
 
-  describe('dirname ', function() {
+  describe('property ', function() {
 
     it('should return the path argument if it has no depth', function() {
-      var result = tools.dirname('root');
+      var result = tools.parent('root');
 
       expect(result).to.equal('root');
     });
 
     it('should return path string without last depth', function() {
-      var result    = tools.dirname(testPath);
+      var result    = tools.parent(testPath);
       var pathArray = tools.split(testPath).slice(0, 3);
 
       expect(result).to.equal(tools.join(pathArray));
     });
   });
 
+  describe('areIdentical ', function() {
+    var clone = {bla: {bla: 'bla'}};
+    var data  = {bla: {bla: 'bla'}};
+
+    it('should find data and clone not equal, because not identical', function() {
+
+      var areEqual = tools.areIdentical(clone, data);
+      expect(areEqual).to.equal(false);
+    });
+
+    it('should find data identical to itself', function() {
+
+      var areEqual = tools.areIdentical(data, data);
+      expect(areEqual).to.equal(true);
+    });
+
+    it('should find germany identical to itself', function() {
+
+      var areEqual = tools.areIdentical(clone, clone, 'countries.germany');
+      expect(areEqual).to.equal(true);
+    });
+  });
+
   describe('basename ', function() {
 
     it('should return the path argument if it has no depth', function() {
-      var result = tools.basename('root');
+      var result = tools.property('root');
 
       expect(result).to.equal('root');
     });
 
     it('should return last depth', function() {
-      var result      = tools.basename(testPath);
+      var result      = tools.property(testPath);
       var pathArray   = tools.split(testPath);
       var lastElement = pathArray[pathArray.length - 1];
 
