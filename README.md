@@ -40,10 +40,23 @@ If no `path` is provided, the whole object is cloned.
 
 Returns the referenced substructure/value or undefined if it was not found.
 
-### add
+### defineProperty
+
+Makes [Object.defineProperty()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) available to deep referencing.
 
 Adds a new substructure/value to the location specified with the `path`.
 If structures in the `path` do not exist, the method will create them in order to fulfil the task.
+
+
+
+### put
+
+Adds a new substructure/value to the location specified with the `path`.
+If structures in the `path` do not exist, the method will create them in order to fulfil the task.
+
+### update
+
+Adds a new substructure/value to the location specified with the `path`.
 
 ### move
 
@@ -59,17 +72,25 @@ Uses the [deep-equal](https://www.npmjs.com/package/deep-equal) package.
 
 Returns true if the compared objects strictly equals each other.
 
-### same
-
-Returns only true if the compared object references point to the same object.
-
 ### diff
 
 Uses the [deep-diff](https://www.npmjs.com/package/deep-diff) package.
 
+### createPaths
+
+Create the object hierarchy if needed.
+
 ### getPaths
 
 Returns all available paths to all values in the object.
+
+### tools.parent
+
+Returns the parent part of a path (like unix dirname).
+
+### tools.property
+
+Returns the property part of a path (like unix basename).
 
 
 
