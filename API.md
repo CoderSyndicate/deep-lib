@@ -13,10 +13,11 @@ is called an no custom options where provided</p>
 </dl>
 ## Functions
 <dl>
-<dt><a href="#clone">clone(object, [path])</a> ⇒ <code>*</code></dt>
+<dt><a href="#clone">clone(object, [path])</a> ⇒ <code>*</code> | <code>undefined</code></dt>
 <dd><p>Returns a deep clone of the provided object.
 If a path is provided, the method will return
-a clone of the substructure.</p>
+a clone of the referenced substructure, property value or undefined
+should the path be unknown.</p>
 </dd>
 <dt><a href="#createPath">createPath(object, path, [root])</a></dt>
 <dd><p>Creates all objects that are part of the provided path hierarchy</p>
@@ -55,31 +56,30 @@ This is the singleton.
 
 **Kind**: global namespace  
 <a name="clone"></a>
-## clone(object, [path]) ⇒ <code>\*</code>
+## clone(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
 Returns a deep clone of the provided object.
 If a path is provided, the method will return
-a clone of the substructure.
+a clone of the referenced substructure, property value or undefined
+should the path be unknown.
 
 **Kind**: global function  
+**Returns**: <code>\*</code> &#124; <code>undefined</code> - a structure, a value or undefined  
 **Access:** public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | object | <code>object</code> | source object |
-| [path] | <code>string</code> | path to some substructure |
+| [path] | <code>string</code> | path pointing to a value or a structure |
 
 **Example**  
 ```js
 var a = {foo: {hello: 'world'}};
 
-var b = deep.clone(a);
-// b = {foo: {hello: 'world'}}
+var b = deep.clone(a); // => {foo: {hello: 'world'}}
 
-var c = deep.clone(a,'foo');
-// c = {hello: 'world'}
+var c = deep.clone(a,'foo'); // => {hello: 'world'}
 
-var d = deep.clone(a,'foo.world');
-// d = 'world'
+var d = deep.clone(a,'foo.world'); // => 'world'
 ```
 <a name="createPath"></a>
 ## createPath(object, path, [root])
