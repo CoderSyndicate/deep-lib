@@ -1,7 +1,9 @@
 ## Objects
 <dl>
 <dt><a href="#deep-lib">deep-lib</a> : <code>object</code></dt>
-<dd><p>This is the singleton.</p>
+<dd><p>Enables to manipulate data and its substructures using dot separated property paths.</p>
+<p>All provided methods accept a <code>path</code> property referencing some substructure/value in the data.
+If <code>path</code> is provided, the called method will be applied to the referenced substructure.</p>
 </dd>
 </dl>
 ## Typedefs
@@ -12,14 +14,17 @@
 </dl>
 <a name="deep-lib"></a>
 ## deep-lib : <code>object</code>
-This is the singleton.
+Enables to manipulate data and its substructures using dot separated property paths.
+
+All provided methods accept a `path` property referencing some substructure/value in the data.
+If `path` is provided, the called method will be applied to the referenced substructure.
 
 **Kind**: global namespace  
 
 * [deep-lib](#deep-lib) : <code>object</code>
   * [.tools](#deep-lib.tools) : <code>object</code>
-    * [.parent(path)](#deep-lib.tools.parent) ⇒ <code>\*</code>
-    * [.property(path)](#deep-lib.tools.property) ⇒ <code>\*</code>
+    * [.parent(path)](#deep-lib.tools.parent) ⇒ <code>string</code>
+    * [.property(path)](#deep-lib.tools.property) ⇒ <code>string</code>
   * [.clone(object, [offset])](#deep-lib.clone) ⇒ <code>\*</code> &#124; <code>undefined</code>
   * [.createPath(object, path, [offset])](#deep-lib.createPath)
   * [.defineProperty(object, path, value, options, [offset])](#deep-lib.defineProperty)
@@ -38,11 +43,11 @@ This is the singleton.
 **Kind**: static namespace of <code>[deep-lib](#deep-lib)</code>  
 
 * [.tools](#deep-lib.tools) : <code>object</code>
-  * [.parent(path)](#deep-lib.tools.parent) ⇒ <code>\*</code>
-  * [.property(path)](#deep-lib.tools.property) ⇒ <code>\*</code>
+  * [.parent(path)](#deep-lib.tools.parent) ⇒ <code>string</code>
+  * [.property(path)](#deep-lib.tools.property) ⇒ <code>string</code>
 
 <a name="deep-lib.tools.parent"></a>
-#### tools.parent(path) ⇒ <code>\*</code>
+#### tools.parent(path) ⇒ <code>string</code>
 **Kind**: static method of <code>[tools](#deep-lib.tools)</code>  
 **Access:** public  
 
@@ -51,7 +56,7 @@ This is the singleton.
 | path | 
 
 <a name="deep-lib.tools.property"></a>
-#### tools.property(path) ⇒ <code>\*</code>
+#### tools.property(path) ⇒ <code>string</code>
 **Kind**: static method of <code>[tools](#deep-lib.tools)</code>  
 **Access:** public  
 
