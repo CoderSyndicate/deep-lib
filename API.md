@@ -1,10 +1,3 @@
-## Members
-<dl>
-<dt><a href="#defaultOptions">defaultOptions</a> : <code>*</code></dt>
-<dd><p>Default options use when Object.defineProperty
-is called an no custom options where provided</p>
-</dd>
-</dl>
 ## Objects
 <dl>
 <dt><a href="#deep-lib">deep-lib</a> : <code>object</code></dt>
@@ -17,12 +10,6 @@ is called an no custom options where provided</p>
 <dd><p>Options that can be applied to the property.</p>
 </dd>
 </dl>
-<a name="defaultOptions"></a>
-## defaultOptions : <code>\*</code>
-Default options use when Object.defineProperty
-is called an no custom options where provided
-
-**Kind**: global variable  
 <a name="deep-lib"></a>
 ## deep-lib : <code>object</code>
 This is the singleton.
@@ -33,9 +20,9 @@ This is the singleton.
   * [.tools](#deep-lib.tools) : <code>object</code>
     * [.parent(path)](#deep-lib.tools.parent) ⇒ <code>\*</code>
     * [.property(path)](#deep-lib.tools.property) ⇒ <code>\*</code>
-  * [.clone(object, [path])](#deep-lib.clone) ⇒ <code>\*</code> &#124; <code>undefined</code>
-  * [.createPath(object, path, [root])](#deep-lib.createPath)
-  * [.defineProperty(object, path, value, options, path)](#deep-lib.defineProperty)
+  * [.clone(object, [offset])](#deep-lib.clone) ⇒ <code>\*</code> &#124; <code>undefined</code>
+  * [.createPath(object, path, [offset])](#deep-lib.createPath)
+  * [.defineProperty(object, path, value, options, [offset])](#deep-lib.defineProperty)
   * [.delete(object, [path])](#deep-lib.delete) ⇒ <code>\*</code> &#124; <code>undefined</code>
   * [.diff(object1, object2, path)](#deep-lib.diff)
   * [.equal(object1, object2, [path])](#deep-lib.equal) ⇒ <code>boolean</code>
@@ -73,7 +60,7 @@ This is the singleton.
 | path | 
 
 <a name="deep-lib.clone"></a>
-### deep-lib.clone(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
+### deep-lib.clone(object, [offset]) ⇒ <code>\*</code> &#124; <code>undefined</code>
 Returns a deep clone of the provided object.
 If a path is provided, the method will return
 a clone of the referenced substructure, property value or undefined
@@ -85,47 +72,91 @@ should the path be unknown.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| object | <code>object</code> | source object |
-| [path] | <code>string</code> | path pointing to a value or a structure |
+| object | <code>object</code> | object to be cloned |
+| [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
 **Example**  
 ```js
-var a = {foo: {hello: 'world'}};
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}};
 
-var b = deep.clone(a); // => {foo: {hello: 'world'}}
+var b    = deep.clone(a); // => {foo: {hello: 'world'}}
 
-var c = deep.clone(a,'foo'); // => {hello: 'world'}
+var c    = deep.clone(a,'foo'); // => {hello: 'world'}
 
-var d = deep.clone(a,'foo.world'); // => 'world'
+var d    = deep.clone(a,'foo.world'); // => 'world'
 ```
 <a name="deep-lib.createPath"></a>
-### deep-lib.createPath(object, path, [root])
-Creates all objects that are part of the provided path hierarchy
+### deep-lib.createPath(object, path, [offset])
+Creates all objects that are part of the provided path hierarchy if they are missing.
+Paths can combine objects and arrays. On each path depth an Object
+or an Array will be created accordingly.
+
+Arrays are referenced using either: one of the wildcards (*, >*, *<), or an index
 
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Access:** public  
+**Todo**
 
-| Param | Type |
-| --- | --- |
-| object | <code>object</code> &#124; <code>array</code> | 
-| path | <code>string</code> | 
-| [root] | <code>string</code> | 
+- [ ] should return the created path
 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>object</code> | object into which the path will be created |
+| path | <code>string</code> | the object hierarchy to be created |
+| [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
+
+**Example**  
+```js
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}};
+
+deep.createPath(a, 'bar'); // => {foo: {hello: 'world'}, bar:{}}
+deep.createPath(a, 'bar.*'); // => {foo: {hello: 'world'}, bar:[]}
+deep.createPath(a, 'bar.0'); // => {foo: {hello: 'world'}, bar:[]}
+deep.createPath(a, 'bar.*.world'); // => {foo: {hello: 'world'}, bar:[{world:{}}]}
+deep.createPath(a, 'bar.*.*.world'); // => {foo: {hello: 'world'}, bar:[[{world:{}}]]}
+
+// used with offset
+deep.createPath(a, 'bar.*.*.world', 'foo'); // => {foo: {hello: 'world', bar:[[{world:{}}]]}}
+```
 <a name="deep-lib.defineProperty"></a>
-### deep-lib.defineProperty(object, path, value, options, path)
+### deep-lib.defineProperty(object, path, value, options, [offset])
 Makes use of [Object.defineProperty](Object.defineProperty) to create a property at the provided location
 
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Access:** public  
+**Todo**
+
+- [ ] should return the created path
+
 
 | Param | Type | Description |
 | --- | --- | --- |
-| object | <code>object</code> &#124; <code>array</code> | root object in which depths the property will be defined |
-| path | <code>string</code> | path locating the property to be created |
-| value | <code>\*</code> | value to be applied to the property, undefined will be ignored |
+| object | <code>object</code> &#124; <code>array</code> | object into which the property will be defined |
+| path | <code>string</code> | path referencing the property to be created |
+| value | <code>\*</code> | value to be applied to the property, if undefined nothing will be done |
 | options | <code>[DefinePropertyOptions](#DefinePropertyOptions)</code> | Object.defineProperty options |
-| path | <code>string</code> | used to rebase the root object argument before proceeding |
+| [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
+**Example**  
+```js
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}};
+
+deep.defineProperty(a, 'bar', 42); // => {foo: {hello: 'world'}, bar:42}
+deep.defineProperty(a, 'bar.*', 42); // => {foo: {hello: 'world'}, bar:[42]}
+deep.defineProperty(a, 'bar.0', 42); // => {foo: {hello: 'world'}, bar:[42]}
+deep.defineProperty(a, 'bar.*.world', 42); // => {foo: {hello: 'world'}, bar:[{world:42}]}
+deep.defineProperty(a, 'bar.*.*.world', 42); // => {foo: {hello: 'world'}, bar:[[{world:42}]]}
+
+// used with offset
+deep.defineProperty(a, 'bar.*.*.world', 42, 'foo'); // => {foo: {hello: 'world', bar:[[{world:42}]]}}
+
+// used with options
+deep.defineProperty(a, 'bar.*.*.world', 42, {writable:true}, 'foo'); // => {foo: {hello: 'world', bar:[[{world:42}]]}}
+```
 <a name="deep-lib.delete"></a>
 ### deep-lib.delete(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
 Deletes the referenced property and returns
