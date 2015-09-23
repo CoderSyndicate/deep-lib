@@ -152,10 +152,10 @@ deep.defineProperty(a, 'bar.*.world', 42); // => {foo: {hello: 'world'}, bar:[{w
 deep.defineProperty(a, 'bar.*.*.world', 42); // => {foo: {hello: 'world'}, bar:[[{world:42}]]}
 
 // used with offset
-deep.defineProperty(a, 'bar.*.*.world', 42, 'foo'); // => {foo: {hello: 'world', bar:[[{world:42}]]}}
+deep.defineProperty(a, 'bar.*.*.world', 42, 'foo'); // same as above
 
 // used with options
-deep.defineProperty(a, 'bar.*.*.world', 42, {writable:true}, 'foo'); // => {foo: {hello: 'world', bar:[[{world:42}]]}}
+deep.defineProperty(a, 'bar.*.*.world', 42, {writable:true}, 'foo'); // same as above
 ```
 <a name="deep-lib.delete"></a>
 ### deep-lib.delete(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
