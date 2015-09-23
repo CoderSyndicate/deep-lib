@@ -4,8 +4,8 @@
 <dd><p>Enables to manipulate data and its substructures using dot separated property paths.</p>
 <p>All provided methods accept a <code>path</code> and/or an <code>offset</code> arguments referencing some substructure/value in the data.</p>
 <ul>
-<li>If <code>offset</code> is provided, the provided object will be rebased to the referenced subobject that will become the processing subject.</li>
-<li>If <code>path</code> is provided, points to the processing subject. If <code>offset</code> was also provided, it is the starting point of the <code>path</code>.</li>
+<li>If <code>offset</code> is provided, object will be rebased to the referenced subobject that will become the processing subject.</li>
+<li>If <code>path</code> is provided, it references the object that will be processed. If <code>offset</code> was also provided, it is the starting point of the <code>path</code>.</li>
 </ul>
 </dd>
 </dl>
@@ -20,8 +20,8 @@
 Enables to manipulate data and its substructures using dot separated property paths.
 
 All provided methods accept a `path` and/or an `offset` arguments referencing some substructure/value in the data.
-- If `offset` is provided, the provided object will be rebased to the referenced subobject that will become the processing subject.
-- If `path` is provided, points to the processing subject. If `offset` was also provided, it is the starting point of the `path`.
+- If `offset` is provided, object will be rebased to the referenced subobject that will become the processing subject.
+- If `path` is provided, it references the object that will be processed. If `offset` was also provided, it is the starting point of the `path`.
 
 **Kind**: global namespace  
 
