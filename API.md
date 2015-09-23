@@ -49,6 +49,32 @@ is called an no custom options where provided
 This is the singleton.
 
 **Kind**: global namespace  
+<a name="deep-lib.clone"></a>
+### deep-lib.clone(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
+Returns a deep clone of the provided object.
+If a path is provided, the method will return
+a clone of the referenced substructure, property value or undefined
+should the path be unknown.
+
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Returns**: <code>\*</code> &#124; <code>undefined</code> - a structure, a value or undefined  
+**Access:** public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>object</code> | source object |
+| [path] | <code>string</code> | path pointing to a value or a structure |
+
+**Example**  
+```js
+var a = {foo: {hello: 'world'}};
+
+var b = deep.clone(a); // => {foo: {hello: 'world'}}
+
+var c = deep.clone(a,'foo'); // => {hello: 'world'}
+
+var d = deep.clone(a,'foo.world'); // => 'world'
+```
 <a name="createPath"></a>
 ## createPath(object, path, [root])
 Creates all objects that are part of the provided path hierarchy
@@ -135,29 +161,3 @@ Options that can be applied to the property.
 | get | <code>function</code> |  | A function which serves as a getter for the property, or undefined if there is no getter. The function return will be used as the value of property. |
 | set | <code>function</code> |  | A function which serves as a setter for the property, or undefined if there is no setter. The function will receive as only argument the new value being assigned to the property. |
 
-<a name="clone"></a>
-## .clone(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
-Returns a deep clone of the provided object.
-If a path is provided, the method will return
-a clone of the referenced substructure, property value or undefined
-should the path be unknown.
-
-**Kind**: static function  
-**Returns**: <code>\*</code> &#124; <code>undefined</code> - a structure, a value or undefined  
-**Access:** public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| object | <code>object</code> | source object |
-| [path] | <code>string</code> | path pointing to a value or a structure |
-
-**Example**  
-```js
-var a = {foo: {hello: 'world'}};
-
-var b = deep.clone(a); // => {foo: {hello: 'world'}}
-
-var c = deep.clone(a,'foo'); // => {hello: 'world'}
-
-var d = deep.clone(a,'foo.world'); // => 'world'
-```
