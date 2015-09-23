@@ -2,8 +2,11 @@
 <dl>
 <dt><a href="#deep-lib">deep-lib</a> : <code>object</code></dt>
 <dd><p>Enables to manipulate data and its substructures using dot separated property paths.</p>
-<p>All provided methods accept a <code>path</code> property referencing some substructure/value in the data.
-If <code>path</code> is provided, the called method will be applied to the referenced substructure.</p>
+<p>All provided methods accept a <code>path</code> and/or an <code>offset</code> arguments referencing some substructure/value in the data.</p>
+<ul>
+<li>If <code>offset</code> is provided, the provided object will be rebased to the referenced subobject that will become the new starting point for the path argument.</li>
+<li>If <code>path</code> is provided, the called method will be applied to the referenced substructure.</li>
+</ul>
 </dd>
 </dl>
 ## Typedefs
@@ -16,8 +19,9 @@ If <code>path</code> is provided, the called method will be applied to the refer
 ## deep-lib : <code>object</code>
 Enables to manipulate data and its substructures using dot separated property paths.
 
-All provided methods accept a `path` property referencing some substructure/value in the data.
-If `path` is provided, the called method will be applied to the referenced substructure.
+All provided methods accept a `path` and/or an `offset` arguments referencing some substructure/value in the data.
+- If `offset` is provided, the provided object will be rebased to the referenced subobject that will become the new starting point for the path argument.
+- If `path` is provided, the called method will be applied to the referenced substructure.
 
 **Kind**: global namespace  
 
