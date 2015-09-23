@@ -11,27 +11,6 @@ is called an no custom options where provided</p>
 <dd><p>This is the singleton.</p>
 </dd>
 </dl>
-## Functions
-<dl>
-<dt><a href="#createPath">createPath(object, path, [root])</a></dt>
-<dd><p>Creates all objects that are part of the provided path hierarchy</p>
-</dd>
-<dt><a href="#defineProperty">defineProperty(object, path, value, options, path)</a></dt>
-<dd><p>Makes use of <a href="Object.defineProperty">Object.defineProperty</a> to create a property at the provided location</p>
-</dd>
-<dt><a href="#delete">delete(object, [path])</a> ⇒ <code>*</code> | <code>undefined</code></dt>
-<dd><p>Deletes the referenced property and returns
-its value</p>
-</dd>
-<dt><a href="#equal">equal(object1, object2, [path])</a> ⇒ <code>boolean</code></dt>
-<dd><p>Checks for simple equality of provided objects or
-a referenced substructure</p>
-</dd>
-<dt><a href="#get">get(object, [path])</a> ⇒ <code>*</code></dt>
-<dd><p>Returns the value referenced by the provided path
-or the object itself</p>
-</dd>
-</dl>
 ## Typedefs
 <dl>
 <dt><a href="#DefinePropertyOptions">DefinePropertyOptions</a> : <code>Object</code></dt>
@@ -49,6 +28,50 @@ is called an no custom options where provided
 This is the singleton.
 
 **Kind**: global namespace  
+
+* [deep-lib](#deep-lib) : <code>object</code>
+  * [.tools](#deep-lib.tools) : <code>object</code>
+    * [.parent(path)](#deep-lib.tools.parent) ⇒ <code>\*</code>
+    * [.property(path)](#deep-lib.tools.property) ⇒ <code>\*</code>
+  * [.clone(object, [path])](#deep-lib.clone) ⇒ <code>\*</code> &#124; <code>undefined</code>
+  * [.createPath(object, path, [root])](#deep-lib.createPath)
+  * [.defineProperty(object, path, value, options, path)](#deep-lib.defineProperty)
+  * [.delete(object, [path])](#deep-lib.delete) ⇒ <code>\*</code> &#124; <code>undefined</code>
+  * [.diff(object1, object2, path)](#deep-lib.diff)
+  * [.equal(object1, object2, [path])](#deep-lib.equal) ⇒ <code>boolean</code>
+  * [.get(object, [path])](#deep-lib.get) ⇒ <code>\*</code>
+  * [.createPath(object, path)](#deep-lib.createPath) ⇒ <code>Array</code>
+  * [.move(object, oldPath, newPath)](#deep-lib.move)
+  * [.put(object, path, value)](#deep-lib.put)
+  * [.select(object, regex, path)](#deep-lib.select) ⇒ <code>Array</code>
+  * [.update(object, path, value)](#deep-lib.update)
+
+<a name="deep-lib.tools"></a>
+### deep-lib.tools : <code>object</code>
+**Kind**: static namespace of <code>[deep-lib](#deep-lib)</code>  
+
+* [.tools](#deep-lib.tools) : <code>object</code>
+  * [.parent(path)](#deep-lib.tools.parent) ⇒ <code>\*</code>
+  * [.property(path)](#deep-lib.tools.property) ⇒ <code>\*</code>
+
+<a name="deep-lib.tools.parent"></a>
+#### tools.parent(path) ⇒ <code>\*</code>
+**Kind**: static method of <code>[tools](#deep-lib.tools)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| path | 
+
+<a name="deep-lib.tools.property"></a>
+#### tools.property(path) ⇒ <code>\*</code>
+**Kind**: static method of <code>[tools](#deep-lib.tools)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| path | 
+
 <a name="deep-lib.clone"></a>
 ### deep-lib.clone(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
 Returns a deep clone of the provided object.
@@ -75,11 +98,11 @@ var c = deep.clone(a,'foo'); // => {hello: 'world'}
 
 var d = deep.clone(a,'foo.world'); // => 'world'
 ```
-<a name="createPath"></a>
-## createPath(object, path, [root])
+<a name="deep-lib.createPath"></a>
+### deep-lib.createPath(object, path, [root])
 Creates all objects that are part of the provided path hierarchy
 
-**Kind**: global function  
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Access:** public  
 
 | Param | Type |
@@ -88,11 +111,12 @@ Creates all objects that are part of the provided path hierarchy
 | path | <code>string</code> | 
 | [root] | <code>string</code> | 
 
-<a name="defineProperty"></a>
-## defineProperty(object, path, value, options, path)
+<a name="deep-lib.defineProperty"></a>
+### deep-lib.defineProperty(object, path, value, options, path)
 Makes use of [Object.defineProperty](Object.defineProperty) to create a property at the provided location
 
-**Kind**: global function  
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -102,25 +126,38 @@ Makes use of [Object.defineProperty](Object.defineProperty) to create a property
 | options | <code>[DefinePropertyOptions](#DefinePropertyOptions)</code> | Object.defineProperty options |
 | path | <code>string</code> | used to rebase the root object argument before proceeding |
 
-<a name="delete"></a>
-## delete(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
+<a name="deep-lib.delete"></a>
+### deep-lib.delete(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
 Deletes the referenced property and returns
 its value
 
-**Kind**: global function  
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Returns**: <code>\*</code> &#124; <code>undefined</code> - value of the deleted property or false if not found  
+**Access:** public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | object | <code>object</code> | source object |
 | [path] | <code>string</code> | path to some substructure |
 
-<a name="equal"></a>
-## equal(object1, object2, [path]) ⇒ <code>boolean</code>
+<a name="deep-lib.diff"></a>
+### deep-lib.diff(object1, object2, path)
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| object1 | 
+| object2 | 
+| path | 
+
+<a name="deep-lib.equal"></a>
+### deep-lib.equal(object1, object2, [path]) ⇒ <code>boolean</code>
 Checks for simple equality of provided objects or
 a referenced substructure
 
-**Kind**: global function  
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -128,17 +165,72 @@ a referenced substructure
 | object2 |  |  |
 | [path] | <code>string</code> | path to some substructure |
 
-<a name="get"></a>
-## get(object, [path]) ⇒ <code>\*</code>
+<a name="deep-lib.get"></a>
+### deep-lib.get(object, [path]) ⇒ <code>\*</code>
 Returns the value referenced by the provided path
 or the object itself
 
-**Kind**: global function  
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | object | <code>object</code> | source object |
 | [path] | <code>string</code> | path to some substructure |
+
+<a name="deep-lib.createPath"></a>
+### deep-lib.createPath(object, path) ⇒ <code>Array</code>
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| object | 
+| path | 
+
+<a name="deep-lib.move"></a>
+### deep-lib.move(object, oldPath, newPath)
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| object | 
+| oldPath | 
+| newPath | 
+
+<a name="deep-lib.put"></a>
+### deep-lib.put(object, path, value)
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| object | 
+| path | 
+| value | 
+
+<a name="deep-lib.select"></a>
+### deep-lib.select(object, regex, path) ⇒ <code>Array</code>
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| object | 
+| regex | 
+| path | 
+
+<a name="deep-lib.update"></a>
+### deep-lib.update(object, path, value)
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| object | 
+| path | 
+| value | 
 
 <a name="DefinePropertyOptions"></a>
 ## DefinePropertyOptions : <code>Object</code>
