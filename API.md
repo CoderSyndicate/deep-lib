@@ -27,15 +27,15 @@ If `path` is provided, the called method will be applied to the referenced subst
     * [.property(path)](#deep-lib.tools.property) ⇒ <code>string</code>
   * [.clone(object, [offset])](#deep-lib.clone) ⇒ <code>\*</code> &#124; <code>undefined</code>
   * [.createPath(object, path, [offset])](#deep-lib.createPath)
-  * [.defineProperty(object, path, value, options, [offset])](#deep-lib.defineProperty)
+  * [.defineProperty(object, path, value, [options], [offset])](#deep-lib.defineProperty)
   * [.delete(object, path)](#deep-lib.delete) ⇒ <code>\*</code> &#124; <code>undefined</code>
-  * [.diff(object1, object2, path)](#deep-lib.diff)
-  * [.equal(object1, object2, [path])](#deep-lib.equal) ⇒ <code>boolean</code>
+  * [.diff(object1, object2, [offset])](#deep-lib.diff)
+  * [.equal(object1, object2, [offset])](#deep-lib.equal) ⇒ <code>boolean</code>
   * [.get(object, [path])](#deep-lib.get) ⇒ <code>\*</code>
   * [.createPath(object, path)](#deep-lib.createPath) ⇒ <code>Array</code>
   * [.move(object, oldPath, newPath)](#deep-lib.move)
   * [.put(object, path, value)](#deep-lib.put)
-  * [.select(object, regex, path)](#deep-lib.select) ⇒ <code>Array</code>
+  * [.select(object, regex, [offset])](#deep-lib.select) ⇒ <code>Array</code>
   * [.update(object, path, value)](#deep-lib.update)
 
 <a name="deep-lib.tools"></a>
@@ -127,7 +127,7 @@ deep.createPath(a, 'bar.*.*.world'); // => {foo: {hello: 'world'}, bar:[[{world:
 deep.createPath(a, 'bar.*.*.world', 'foo'); // => {foo: {hello: 'world', bar:[[{world:{}}]]}}
 ```
 <a name="deep-lib.defineProperty"></a>
-### deep-lib.defineProperty(object, path, value, options, [offset])
+### deep-lib.defineProperty(object, path, value, [options], [offset])
 Makes use of [Object.defineProperty](Object.defineProperty) to create a property at the provided location
 
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
@@ -142,7 +142,7 @@ Makes use of [Object.defineProperty](Object.defineProperty) to create a property
 | object | <code>object</code> &#124; <code>array</code> | object into which the property will be defined |
 | path | <code>string</code> | path referencing the property to be created |
 | value | <code>\*</code> | value to be applied to the property, if undefined nothing will be done |
-| options | <code>[DefinePropertyOptions](#DefinePropertyOptions)</code> | Object.defineProperty options |
+| [options] | <code>[DefinePropertyOptions](#DefinePropertyOptions)</code> | Object.defineProperty options |
 | [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
 **Example**  
@@ -176,18 +176,18 @@ Deletes the referenced property and returns its value
 | path | <code>string</code> | path referencing the property to be deleted |
 
 <a name="deep-lib.diff"></a>
-### deep-lib.diff(object1, object2, path)
+### deep-lib.diff(object1, object2, [offset])
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Access:** public  
 
-| Param |
-| --- |
-| object1 | 
-| object2 | 
-| path | 
+| Param | Type | Description |
+| --- | --- | --- |
+| object1 |  |  |
+| object2 |  |  |
+| [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
 <a name="deep-lib.equal"></a>
-### deep-lib.equal(object1, object2, [path]) ⇒ <code>boolean</code>
+### deep-lib.equal(object1, object2, [offset]) ⇒ <code>boolean</code>
 Checks for simple equality of provided objects or
 a referenced substructure
 
@@ -198,7 +198,7 @@ a referenced substructure
 | --- | --- | --- |
 | object1 |  |  |
 | object2 |  |  |
-| [path] | <code>string</code> | path to some substructure |
+| [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
 <a name="deep-lib.get"></a>
 ### deep-lib.get(object, [path]) ⇒ <code>\*</code>
@@ -246,15 +246,15 @@ or the object itself
 | value | 
 
 <a name="deep-lib.select"></a>
-### deep-lib.select(object, regex, path) ⇒ <code>Array</code>
+### deep-lib.select(object, regex, [offset]) ⇒ <code>Array</code>
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Access:** public  
 
-| Param |
-| --- |
-| object | 
-| regex | 
-| path | 
+| Param | Type | Description |
+| --- | --- | --- |
+| object |  |  |
+| regex |  |  |
+| [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
 <a name="deep-lib.update"></a>
 ### deep-lib.update(object, path, value)
