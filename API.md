@@ -23,7 +23,7 @@ This is the singleton.
   * [.clone(object, [offset])](#deep-lib.clone) ⇒ <code>\*</code> &#124; <code>undefined</code>
   * [.createPath(object, path, [offset])](#deep-lib.createPath)
   * [.defineProperty(object, path, value, options, [offset])](#deep-lib.defineProperty)
-  * [.delete(object, [path])](#deep-lib.delete) ⇒ <code>\*</code> &#124; <code>undefined</code>
+  * [.delete(object, path)](#deep-lib.delete) ⇒ <code>\*</code> &#124; <code>undefined</code>
   * [.diff(object1, object2, path)](#deep-lib.diff)
   * [.equal(object1, object2, [path])](#deep-lib.equal) ⇒ <code>boolean</code>
   * [.get(object, [path])](#deep-lib.get) ⇒ <code>\*</code>
@@ -158,9 +158,8 @@ deep.defineProperty(a, 'bar.*.*.world', 42, 'foo'); // same as above
 deep.defineProperty(a, 'bar.*.*.world', 42, {writable:true}, 'foo'); // same as above
 ```
 <a name="deep-lib.delete"></a>
-### deep-lib.delete(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
-Deletes the referenced property and returns
-its value
+### deep-lib.delete(object, path) ⇒ <code>\*</code> &#124; <code>undefined</code>
+Deletes the referenced property and returns its value
 
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Returns**: <code>\*</code> &#124; <code>undefined</code> - value of the deleted property or false if not found  
@@ -168,8 +167,8 @@ its value
 
 | Param | Type | Description |
 | --- | --- | --- |
-| object | <code>object</code> | source object |
-| [path] | <code>string</code> | path to some substructure |
+| object | <code>object</code> &#124; <code>array</code> | object into which the property will be deleted |
+| path | <code>string</code> | path referencing the property to be deleted |
 
 <a name="deep-lib.diff"></a>
 ### deep-lib.diff(object1, object2, path)
