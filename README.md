@@ -31,6 +31,8 @@ Execute following line
 All provided methods accept a `path` property referencing some substructure/value in the data.
 If `path` is provided, the called method will be applied to the referenced substructure.
 
+The full API documentation can be found in the [API.md](API.md)
+
 ### clone
 
 Clones the referenced substructure/value.

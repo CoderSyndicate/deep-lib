@@ -5,20 +5,16 @@
 
 var gulp = require('gulpfile.basics');
 
-var fs = require("fs");
 var gutil = require("gulp-util");
 var gulpJsdoc2md = require("gulp-jsdoc-to-markdown");
-var rename = require("gulp-rename");
 var concat = require("gulp-concat");
 
-gulp.task("docs", function(){
+gulp.task("doc", function() {
   return gulp.src("lib/**/*.js")
+    .pipe(concat("API.md"))
     .pipe(gulpJsdoc2md({}))
     .on("error", function(err){
-      gutil.log(gutil.colors.red("jsdoc2md failed"), err.message)
+      gutil.log("jsdoc2md failed:", err.message);
     })
-    .pipe(rename(function(path){
-      path.extname = ".md";
-    }))
-    .pipe(gulp.dest("api"));
+    .pipe(gulp.dest("./"));
 });
