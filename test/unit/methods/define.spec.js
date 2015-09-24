@@ -12,13 +12,13 @@ var diffLib  = require('deep-diff');
 var deep     = require('../../../lib/deep-lib');
 var data     = require('../../object.json');
 
-var defineProperty = require('../../../lib/methods/defineProperty').defineProperty;
+var define = require('../../../lib/methods/define').define;
 
-describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - defineProperty ', function() {
+describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - define ', function() {
   it('should do nothing if provided value is undefined', function() {
     var clone = deep.clone(data);
 
-    defineProperty(clone, 'propOnRoot');
+    define(clone, 'propOnRoot');
     expect(clone).to.deep.equal(data);
   });
 
@@ -26,7 +26,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - def
     var clone = deep.clone(data);
     var value = 'worked!';
 
-    defineProperty(clone, 'propOnRoot', value, {
+    define(clone, 'propOnRoot', value, {
       enumerable:   true // otherwise not visible to diff
     });
 
@@ -40,7 +40,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - def
   it('should create deep properties with default options: root.depth1.0.property', function() {
     var clone = deep.clone(data);
 
-    defineProperty(clone, 'root.depth1.0.property', 'worked!');
+    define(clone, 'root.depth1.0.property', 'worked!');
 
     var diff = diffLib(data, clone);
 
@@ -53,7 +53,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - def
   it('should create deep properties: root.depth1.0.property', function() {
     var clone = deep.clone(data);
 
-    defineProperty(clone, 'root.depth1.0.property', 'worked!', {
+    define(clone, 'root.depth1.0.property', 'worked!', {
       enumerable:   true // otherwise not visible to diff
     });
 
@@ -68,7 +68,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - def
   it('should create deep properties using a rebased root: property in countries.germany', function() {
     var clone = deep.clone(data);
 
-    defineProperty(clone, 'property', 'worked!', 'countries.germany');
+    define(clone, 'property', 'worked!', 'countries.germany');
 
     var diff = diffLib(data, clone);
 

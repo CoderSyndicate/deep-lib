@@ -30,16 +30,16 @@ All provided methods accept a `path` and/or an `offset` arguments referencing so
     * [.parent(path)](#deep-lib.tools.parent) ⇒ <code>string</code>
     * [.property(path)](#deep-lib.tools.property) ⇒ <code>string</code>
   * [.clone(object, [offset])](#deep-lib.clone) ⇒ <code>\*</code> &#124; <code>undefined</code>
+  * [.create(object, path, value)](#deep-lib.create)
   * [.createPath(object, path, [offset])](#deep-lib.createPath)
-  * [.defineProperty(object, path, value, [options], [offset])](#deep-lib.defineProperty)
+  * [.define(object, path, value, [options], [offset])](#deep-lib.define)
   * [.delete(object, path)](#deep-lib.delete) ⇒ <code>\*</code> &#124; <code>undefined</code>
-  * [.diff(object1, object2, [offset])](#deep-lib.diff)
+  * [.diff(object1, object2, [offset])](#deep-lib.diff) ⇒ <code>Array.&lt;object&gt;</code> &#124; <code>undefined</code>
   * [.equal(object1, object2, [offset])](#deep-lib.equal) ⇒ <code>boolean</code>
-  * [.get(object, [path])](#deep-lib.get) ⇒ <code>\*</code>
-  * [.createPath(object, path)](#deep-lib.createPath) ⇒ <code>Array</code>
+  * [.getPaths(object, [offset])](#deep-lib.getPaths) ⇒ <code>Array.&lt;string&gt;</code>
   * [.move(object, oldPath, newPath)](#deep-lib.move)
-  * [.put(object, path, value)](#deep-lib.put)
-  * [.select(object, regex, [offset])](#deep-lib.select) ⇒ <code>Array</code>
+  * [.search(object, regex, [offset])](#deep-lib.search) ⇒ <code>Array</code>
+  * [.select(object, [path])](#deep-lib.select) ⇒ <code>\*</code> &#124; <code>undefined</code>
   * [.update(object, path, value)](#deep-lib.update)
 
 <a name="deep-lib.tools"></a>
@@ -90,11 +90,20 @@ var deep = require('deep-lib');
 var a    = {foo: {hello: 'world'}};
 
 var b    = deep.clone(a); // => {foo: {hello: 'world'}}
-
 var c    = deep.clone(a,'foo'); // => {hello: 'world'}
-
 var d    = deep.clone(a,'foo.world'); // => 'world'
 ```
+<a name="deep-lib.create"></a>
+### deep-lib.create(object, path, value)
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Access:** public  
+
+| Param |
+| --- |
+| object | 
+| path | 
+| value | 
+
 <a name="deep-lib.createPath"></a>
 ### deep-lib.createPath(object, path, [offset])
 Creates all objects that are part of the provided path hierarchy if they are missing.
@@ -130,8 +139,8 @@ deep.createPath(a, 'bar.*.*.world'); // => {foo: {hello: 'world'}, bar:[[{world:
 // used with offset
 deep.createPath(a, 'bar.*.*.world', 'foo'); // => {foo: {hello: 'world', bar:[[{world:{}}]]}}
 ```
-<a name="deep-lib.defineProperty"></a>
-### deep-lib.defineProperty(object, path, value, [options], [offset])
+<a name="deep-lib.define"></a>
+### deep-lib.define(object, path, value, [options], [offset])
 Makes use of [Object.defineProperty](Object.defineProperty) to create a property at the provided location
 
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
@@ -179,23 +188,46 @@ Deletes the referenced property and returns its value
 | object | <code>object</code> &#124; <code>array</code> | object into which the property will be deleted |
 | path | <code>string</code> | path referencing the property to be deleted |
 
+**Example**  
+```js
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}, some: 'thing'};
+
+deep.delete(a, 'some'); // => {foo: {hello: 'world'}}
+deep.delete(a, 'foo'); // => {some: 'thing'}
+```
 <a name="deep-lib.diff"></a>
-### deep-lib.diff(object1, object2, [offset])
+### deep-lib.diff(object1, object2, [offset]) ⇒ <code>Array.&lt;object&gt;</code> &#124; <code>undefined</code>
+Makes use of the [deep-diff](https://www.npmjs.com/package/deep-diff) package to return
+the differences between 2 objects in JSON format. It generates a patch format that could be applied
+to another object, or reverted later on.
+
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Returns**: <code>Array.&lt;object&gt;</code> &#124; <code>undefined</code> - returns a diff object or `undefined` if both object are deeply equal  
 **Access:** public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| object1 |  |  |
-| object2 |  |  |
+| object1 |  | reference object, all differences are expressed in relation to it |
+| object2 |  | comparison object |
 | [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
+**Example**  
+```js
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}, some: 'thing'};
+var b    = {foo: {hello: 'world'}};
+
+deep.diff(a, b); // unequal => [{"kind": "D","path": ["some"],"rhs": "thing"}]
+deep.diff(a, b, 'foo'); // equal => undefined
+```
 <a name="deep-lib.equal"></a>
 ### deep-lib.equal(object1, object2, [offset]) ⇒ <code>boolean</code>
-Checks for simple equality of provided objects or
-a referenced substructure
+Makes use of the [deep-equal](https://www.npmjs.com/package/deep-equal) package to return
+whether 2 objects are deeply equal or not.
 
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Returns**: <code>boolean</code> - if objects are equal `true` if unequal `false`  
 **Access:** public  
 
 | Param | Type | Description |
@@ -204,53 +236,60 @@ a referenced substructure
 | object2 |  |  |
 | [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
-<a name="deep-lib.get"></a>
-### deep-lib.get(object, [path]) ⇒ <code>\*</code>
-Returns the value referenced by the provided path
-or the object itself
+**Example**  
+```js
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}, some: 'thing'};
+var b    = {foo: {hello: 'world'}};
+
+deep.equal(a, b); // unequal => false
+deep.equal(a, b, 'foo'); // equal => true
+```
+<a name="deep-lib.getPaths"></a>
+### deep-lib.getPaths(object, [offset]) ⇒ <code>Array.&lt;string&gt;</code>
+Crawls through an object to generate a list of all path pointing to a property value pair.
+It lists all paths fully, ignoring the disabled `enumerable` option that some properties might have.
+
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Returns**: <code>Array.&lt;string&gt;</code> - a list of all paths found in the provided object  
+**Access:** public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object |  | object to be crawled |
+| [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
+
+**Example**  
+```js
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}, some: 'thing'};
+
+deep.getPaths(a); // => ['foo.hello', 'some']
+deep.getPaths(a, 'foo'); // => ['hello']
+```
+<a name="deep-lib.move"></a>
+### deep-lib.move(object, oldPath, newPath)
+Moves a property or subobject within the provided object
 
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Access:** public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| object | <code>object</code> | source object |
-| [path] | <code>string</code> | path to some substructure |
+| object | <code>object</code> &#124; <code>array</code> | object to be changed |
+| oldPath | <code>string</code> | path to the old property |
+| newPath | <code>string</code> | path to the new property |
 
-<a name="deep-lib.createPath"></a>
-### deep-lib.createPath(object, path) ⇒ <code>Array</code>
-**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
-**Access:** public  
+**Example**  
+```js
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}, some: 'thing'};
 
-| Param |
-| --- |
-| object | 
-| path | 
-
-<a name="deep-lib.move"></a>
-### deep-lib.move(object, oldPath, newPath)
-**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
-**Access:** public  
-
-| Param |
-| --- |
-| object | 
-| oldPath | 
-| newPath | 
-
-<a name="deep-lib.put"></a>
-### deep-lib.put(object, path, value)
-**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
-**Access:** public  
-
-| Param |
-| --- |
-| object | 
-| path | 
-| value | 
-
-<a name="deep-lib.select"></a>
-### deep-lib.select(object, regex, [offset]) ⇒ <code>Array</code>
+deep.move(a, 'some', 'foo.some'); // => {foo: {hello: 'world', some: 'thing'}};
+deep.move(a, 'some', 'foo.hello.world'); // => {foo: {hello: {world: 'thing'}}};
+```
+<a name="deep-lib.search"></a>
+### deep-lib.search(object, regex, [offset]) ⇒ <code>Array</code>
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Access:** public  
 
@@ -260,8 +299,34 @@ or the object itself
 | regex |  |  |
 | [offset] | <code>string</code> | path used to rebase the processed object to the referenced subobject |
 
+<a name="deep-lib.select"></a>
+### deep-lib.select(object, [path]) ⇒ <code>\*</code> &#124; <code>undefined</code>
+Returns the value referenced by the provided path
+or `undefined` if some element of the path does not exist
+
+**Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
+**Returns**: <code>\*</code> &#124; <code>undefined</code> - the referenced value or `undefined`  
+**Access:** public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>object</code> | source object |
+| [path] | <code>string</code> | path to some substructure |
+
+**Example**  
+```js
+var deep = require('deep-lib');
+var a    = {foo: {hello: 'world'}, some: 'thing'};
+
+deep.select(a); // => {foo: {hello: 'world'}, some: 'thing'};
+deep.select(a, 'foo'); // => {hello: 'world'}
+deep.select(a, 'foo.hello'); // => 'world'
+deep.select(a, 'foo.bad'); // => undefined
+```
 <a name="deep-lib.update"></a>
 ### deep-lib.update(object, path, value)
+Update is the
+
 **Kind**: static method of <code>[deep-lib](#deep-lib)</code>  
 **Access:** public  
 
