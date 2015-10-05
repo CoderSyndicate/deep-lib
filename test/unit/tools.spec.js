@@ -40,12 +40,12 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - met
     });
   });
 
-  describe('property ', function() {
+  describe('parent ', function() {
 
-    it('should return the path argument if it has no depth', function() {
+    it('should return null if it has no depth', function() {
       var result = tools.parent('root');
 
-      expect(result).to.equal('root');
+      expect(result).to.equal(null);
     });
 
     it('should return path string without last depth', function() {
@@ -79,7 +79,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - met
     });
   });
 
-  describe('basename ', function() {
+  describe('property ', function() {
 
     it('should return the path argument if it has no depth', function() {
       var result = tools.property('root');
