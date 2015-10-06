@@ -7,17 +7,60 @@
 /* global it */
 "use strict";
 
-var expect   = require('chai').expect;
-var deep     = require('../../../lib/deep-lib');
-var data     = require('../../object.json');
+var expect    = require('chai').expect;
+var diffLib   = require('deep-diff');
+var deep      = require('../../../lib/deep-lib');
+var data      = require('../../object.json');
+var pathTests = require('../../paths.json');
+var value     = 'WORKED!!!';
 
 describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - create ', function() {
+
+  // iterate through all the path tests
+  pathTests.forEach(function testIterator (test) {
+    if (test.type === 'create') {
+      // only interested in create tests
+
+      it('should ' + test.description+ ': ' + test.path , function() {
+
+        // clone test data to be able to compare
+        var clone = deep.clone(data);
+
+        if (typeof test.createResult === 'string') {
+          expect(deep.create.bind(this, clone, test.path, value, test.force)).to.throw(test.value);
+        }
+        else {
+
+          var realPath = deep.create(clone, test.path, value, test.force);
+
+          var diff = diffLib(data, clone);
+
+          if (false) {
+            console.log('diff: ',JSON.stringify(diff));
+            console.log('result: ',realPath,' = ', deep.select(clone, realPath));
+          }
+
+          expect(clone).to.not.deep.equal(data);
+          expect(diff).to.deep.equal(test.createResult);
+          expect(realPath).to.deep.equal(test.realPath);
+        }
+      });
+    }
+  });
+
   var clone = deep.clone(data);
   var paris = {
     "name": "Paris",
     "population": 3562166,
     "area": 891.85
   };
+
+  it('should ignore undefined values and no substructure created', function() {
+    deep.create(clone, 'countries.portugal');
+    var control = deep.select(clone, 'countries.portugal.towns');
+
+    expect(control).to.equal(undefined);
+  });
 
   it('should replace a deep value', function() {
     deep.create(clone, 'countries.germany.towns.capital', 'hamburg');
@@ -79,12 +122,5 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
     var control = deep.select(clone, 'countries.france.towns.paris');
 
     expect(control).to.equal(paris);
-  });
-
-  it('should ignore undefined values and no substructure created', function() {
-    deep.create(clone, 'countries.portugal');
-    var control = deep.select(clone, 'countries.portugal.towns');
-
-    expect(control).to.equal(undefined);
   });
 });
