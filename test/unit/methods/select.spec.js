@@ -11,8 +11,16 @@ var expect   = require('chai').expect;
 var deep     = require('../../../lib/deep-lib');
 var data     = require('../../object.json');
 
+var errorCodes = require('../../../lib/methods/select').errorCodes;
+
 describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - select ', function() {
   var clone = deep.clone(data);
+
+  it('should throw error if array wildcards are part of the path argument: bar.*', function() {
+    var clone = deep.clone(data);
+
+    expect(deep.select.bind(this,clone, 'bar.*')).to.throw(errorCodes.WILDCARDS_NOT_ALLOWED);
+  });
 
   it('should return a deep value', function() {
     var capital = deep.select(clone, 'countries.germany.towns.capital');
