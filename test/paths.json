@@ -1,8 +1,83 @@
 [
   {
     "type": "create",
-    "description": "",
-    "path": "",
-    "expectation": {}
+    "description": "throw an error by trying to create an array element in an object",
+    "path": "countries.*",
+    "pathResult": "root is an object, so first path element must be a property, not an array",
+    "createResult": "root is an object, so first path element must be a property, not an array"
+  },
+  {
+    "type": "create",
+    "description": "push an 'null' element into an array when using wildcard",
+    "path": "countries.spain.sites.*",
+    "realPath": "countries.spain.sites.2",
+    "pathResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":{}}}],
+    "createResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":"WORKED!!!"}}]
+  },
+  {
+    "type": "create",
+    "description": "push an 'null' element into an array when using wildcard",
+    "path": "countries.spain.sites.*+",
+    "realPath": "countries.spain.sites.2",
+    "pathResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":{}}}],
+    "createResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":"WORKED!!!"}}]
+  },
+  {
+    "type": "create",
+    "description": "support array nesting",
+    "path": "countries.spain.sites.*+.*.*+",
+    "realPath": "countries.spain.sites.2.0.0",
+    "pathResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":[[{}]]}}],
+    "createResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":[["WORKED!!!"]]}}]
+  },
+  {
+    "type": "create",
+    "description": "throw an error if a type overwrite is detected",
+    "path": "countries.spain.sites.0.*.*+",
+    "realPath": "countries.spain.sites.0.0.0",
+    "pathResult": "root is an object, so first path element must be a property, not an array",
+    "createResult": "root is an object, so first path element must be a property, not an array"
+  },
+  {
+    "type": "create",
+    "description": "overwrite the existing type if force argument is set to true",
+    "path": "countries.spain.sites.0.*.*+",
+    "force": true,
+    "realPath": "countries.spain.sites.0.0.0",
+    "pathResult": [{"kind":"E","path":["countries","spain","sites",0],"lhs":"Alhambra","rhs":[[{}]]}],
+    "createResult": [{"kind":"E","path":["countries","spain","sites",0],"lhs":"Alhambra","rhs":[["WORKED!!!"]]}]
+  },
+  {
+    "type": "create",
+    "description": "nest an object between arrays",
+    "path": "countries.spain.sites.*+.bar.0",
+    "realPath": "countries.spain.sites.2.bar.0",
+    "pathResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":{"bar":[{}]}}}],
+    "createResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":{"bar":["WORKED!!!"]}}}]
+  },
+  {
+    "type": "create",
+    "description": "append an object at the end of an array nesting",
+    "path": "countries.spain.sites.*.*.*+.bar",
+    "realPath": "countries.spain.sites.2.0.0.bar",
+    "pathResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":[[{"bar":{}}]]}}],
+    "createResult": [{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":[[{"bar":"WORKED!!!"}]]}}]
+  },
+  {
+    "type": "create",
+    "description": "support object nesting",
+    "path": "countries.germany.towns.bayern.unterschneidheim",
+    "realPath": "countries.germany.towns.bayern.unterschneidheim",
+    "pathResult": [{"kind":"N","path":["countries","germany","towns","bayern"],"rhs":{"unterschneidheim":{}}}],
+    "createResult": [{"kind":"N","path":["countries","germany","towns","bayern"],"rhs":{"unterschneidheim":"WORKED!!!"}}]
+  },
+  {
+    "type": "create",
+    "description": "support offset argument",
+    "path": "towns.bayern.unterschneidheim",
+    "offset": "countries.germany",
+    "realPath": "towns.bayern.unterschneidheim",
+    "pathResult": [{"kind":"N","path":["countries","germany","towns","bayern"],"rhs":{"unterschneidheim":{}}}],
+    "createResult": [{"kind":"N","path":["towns"],"rhs":{"bayern":{"unterschneidheim":"WORKED!!!"}}}]
   }
 ]
