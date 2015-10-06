@@ -16,7 +16,7 @@ var data     = require('../../object.json');
 var createPath = require('../../../lib/methods/createPath').createPath;
 var errorCodes = require('../../../lib/methods/update').errorCodes;
 
-describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - createPath ', function() {
+describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - update ', function() {
 
     it('should create root object: object1', function() {
         var clone = deep.clone(data);
