@@ -40,12 +40,117 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - met
     });
   });
 
-  describe('property ', function() {
+  describe('isObject ', function() {
 
-    it('should return the path argument if it has no depth', function() {
+    it('should return true for {}', function() {
+      var result = tools.isObject({});
+
+      expect(result).to.equal(true);
+    });
+
+    it('should return true for []', function() {
+      var result = tools.isObject([]);
+
+      expect(result).to.equal(true);
+    });
+
+    it('should return false for null', function() {
+      var result = tools.isObject(null);
+
+      expect(result).to.equal(false);
+    });
+
+    it('should return false for undefined', function() {
+      var result = tools.isObject(undefined);
+
+      expect(result).to.equal(false);
+    });
+  });
+
+  describe('isArrayIndex ', function() {
+
+    it('should return push (truthy) for ' + tools.arrayPlaceholder, function() {
+      var result = tools.isArrayIndex(tools.arrayPlaceholder);
+
+      expect(result).to.equal('push');
+    });
+
+    it('should return push (truthy) for ' + tools.arrayPush, function() {
+      var result = tools.isArrayIndex(tools.arrayPush);
+
+      expect(result).to.equal('push');
+    });
+
+    it('should return pop (truthy) for ' + tools.arrayPop, function() {
+      var result = tools.isArrayIndex(tools.arrayPop);
+
+      expect(result).to.equal('pop');
+    });
+
+    it('should return true for a integer', function() {
+      var result = tools.isArrayIndex(12);
+
+      expect(result).to.equal(true);
+    });
+
+    it('should return false for 4try', function() {
+      var result = tools.isArrayIndex('4try');
+
+      expect(result).to.equal(false);
+    });
+
+    it('should return false for 23-54', function() {
+      var result = tools.isArrayIndex('23-54');
+
+      expect(result).to.equal(false);
+    });
+  });
+
+  describe('pathIncludesArrayWildcards ', function() {
+
+    it('should return true for bar.' + tools.arrayPlaceholder, function() {
+      var result = tools.pathIncludesArrayWildcards('bar.'+tools.arrayPlaceholder);
+
+      expect(result).to.equal(true);
+    });
+
+    it('should return true for bar.' + tools.arrayPush, function() {
+      var result = tools.pathIncludesArrayWildcards('bar.'+tools.arrayPush);
+
+      expect(result).to.equal(true);
+    });
+
+    it('should return true for bar.' + tools.arrayPop, function() {
+      var result = tools.pathIncludesArrayWildcards('bar.'+tools.arrayPop);
+
+      expect(result).to.equal(true);
+    });
+
+    it('should return false for bar.0', function() {
+      var result = tools.pathIncludesArrayWildcards('bar.0');
+
+      expect(result).to.equal(false);
+    });
+
+    it('should return false for 0.bar.0', function() {
+      var result = tools.pathIncludesArrayWildcards('0.bar.0');
+
+      expect(result).to.equal(false);
+    });
+
+    it('should return false for bar.foo.4', function() {
+      var result = tools.pathIncludesArrayWildcards('bar.foo.4');
+
+      expect(result).to.equal(false);
+    });
+  });
+
+  describe('parent ', function() {
+
+    it('should return null if it has no depth', function() {
       var result = tools.parent('root');
 
-      expect(result).to.equal('root');
+      expect(result).to.equal(null);
     });
 
     it('should return path string without last depth', function() {
@@ -79,7 +184,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - met
     });
   });
 
-  describe('basename ', function() {
+  describe('property ', function() {
 
     it('should return the path argument if it has no depth', function() {
       var result = tools.property('root');

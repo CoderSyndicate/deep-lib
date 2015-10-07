@@ -28,14 +28,14 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - equ
   });
 
   it('should find data and changed unequal', function() {
-    deep.put(clone, 'countries.france.towns.capital', 'hamburg');
+    deep.create(clone, 'countries.france.towns.capital', 'hamburg');
 
     var areEqual = deep.equal(clone, data);
     expect(areEqual).to.equal(false);
   });
 
   it('should find data and changed substructure unequal', function() {
-    deep.put(clone, 'countries.france.towns.capital', 'paris');
+    deep.create(clone, 'countries.france.towns.capital', 'paris');
 
     var areEqual = deep.equal(clone, data, 'countries.france');
     expect(areEqual).to.equal(false);

@@ -1,7 +1,7 @@
 {
   "name": "deep-lib",
   "license": "MIT",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "homepage": "https://github.com/CoderSyndicate/deep-lib",
   "author": "https://github.com/CoderSyndicate/deep-lib/graphs/contributors",
   "description": "Enables to manipulate data and its substructures using dot separated property paths",
@@ -25,9 +25,13 @@
     "deep-equal": "*"
   },
   "devDependencies": {
-    "gulp": "*",
-    "gulpfile.basics": "*",
     "chai": "*",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-jsdoc-to-markdown": "^1.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.6",
+    "gulpfile.basics": "*",
     "mocha": "*"
   },
   "repository": {

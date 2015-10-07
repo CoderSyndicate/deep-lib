@@ -18,12 +18,12 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - mov
     var oldPath = 'countries.germany';
     var newPath = 'countries.france';
 
-    var moved = deep.get(clone, oldPath);
+    var moved = deep.select(clone, oldPath);
 
     deep.move(clone, oldPath, newPath);
-    var empty   = deep.get(clone, oldPath);
-    var control = deep.get(clone, newPath);
-    var value   = deep.get(data, oldPath);
+    var empty   = deep.select(clone, oldPath);
+    var control = deep.select(clone, newPath);
+    var value   = deep.select(data, oldPath);
 
     expect(empty).to.equal(undefined);
     expect(control).to.deep.equal(value);
@@ -34,12 +34,12 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - mov
     var oldPath = 'countries.spain.sites.0';
     var newPath = 'countries.france.sites.0';
 
-    var moved = deep.get(clone, oldPath);
+    var moved = deep.select(clone, oldPath);
 
     deep.move(clone, oldPath, newPath);
-    var nextElement = deep.get(clone, oldPath);
-    var control     = deep.get(clone, newPath);
-    var original    = deep.get(data, oldPath);
+    var nextElement = deep.select(clone, oldPath);
+    var control     = deep.select(clone, newPath);
+    var original    = deep.select(data, oldPath);
 
     expect(nextElement).to.equal('Cabo de Gata');
     expect(control).to.deep.equal(original);
@@ -50,19 +50,19 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - mov
     var oldPath = 'countries.spain.sites.0';
     var newPath = 'countries.spain.bestSite';
 
-    var moved = deep.get(clone, oldPath);
+    var moved = deep.select(clone, oldPath);
 
     deep.move(clone, oldPath, newPath);
-    var empty   = deep.get(clone, oldPath);
-    var control = deep.get(clone, newPath);
+    var empty   = deep.select(clone, oldPath);
+    var control = deep.select(clone, newPath);
 
     expect(empty).to.equal(undefined);
     expect(control).to.equal(moved);
   });
 
   it('should move a deep value', function() {
-    deep.put(clone, 'countries.france.towns.capital', 'hamburg');
-    var control = deep.get(clone, 'countries.france.towns.capital');
+    deep.create(clone, 'countries.france.towns.capital', 'hamburg');
+    var control = deep.select(clone, 'countries.france.towns.capital');
 
 
     expect(control).to.equal('hamburg');

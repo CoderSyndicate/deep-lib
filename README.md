@@ -31,12 +31,14 @@ Execute following line
 All provided methods accept a `path` property referencing some substructure/value in the data.
 If `path` is provided, the called method will be applied to the referenced substructure.
 
+The full API documentation can be found in the [API.md](API.md)
+
 ### clone
 
 Clones the referenced substructure/value.
 If no `path` is provided, the whole object is cloned.
 
-### get
+### select
 
 Returns the referenced substructure/value or undefined if it was not found.
 
@@ -47,9 +49,7 @@ Makes [Object.defineProperty()](https://developer.mozilla.org/en-US/docs/Web/Jav
 Adds a new substructure/value to the location specified with the `path`.
 If structures in the `path` do not exist, the method will create them in order to fulfil the task.
 
-
-
-### put
+### create
 
 Adds a new substructure/value to the location specified with the `path`.
 If structures in the `path` do not exist, the method will create them in order to fulfil the task.

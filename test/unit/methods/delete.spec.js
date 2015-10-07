@@ -16,7 +16,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - del
 
   it('should delete a deep value', function() {
     var value   = deep.delete(clone, 'countries.germany.towns.capital');
-    var control = deep.get(clone, 'countries.germany.towns.capital');
+    var control = deep.select(clone, 'countries.germany.towns.capital');
 
     expect(value).to.equal('berlin');
     expect(control).to.equal(undefined);
@@ -24,7 +24,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - del
 
   it('should delete an array element', function() {
     var value   = deep.delete(clone, 'countries.spain.sites.0');
-    var control = deep.get(clone, 'countries.spain.sites.0');
+    var control = deep.select(clone, 'countries.spain.sites.0');
 
     expect(value).to.equal('Alhambra');
     expect(control).to.equal('Cabo de Gata');
@@ -32,7 +32,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - del
 
   it('should return deep structures', function() {
     var value   = deep.delete(clone, 'countries.germany.towns');
-    var control = deep.get(clone, 'countries.germany.towns');
+    var control = deep.select(clone, 'countries.germany.towns');
 
     expect(value).to.deep.equal({
       "berlin": {

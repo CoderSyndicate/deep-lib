@@ -21,7 +21,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - dif
   });
 
   it('should return differences between data and changed', function() {
-    deep.put(clone, 'countries.germany.towns.capital', 'hamburg');
+    deep.create(clone, 'countries.germany.towns.capital', 'hamburg');
 
     var diff = deep.diff(clone, data);
     expect(diff).to.deep.equal([

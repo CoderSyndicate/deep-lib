@@ -11,28 +11,52 @@ var expect   = require('chai').expect;
 var deep     = require('../../../lib/deep-lib');
 var data     = require('../../object.json');
 
+var errorCodes = require('../../../lib/methods/select').errorCodes;
+
 describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - select ', function() {
   var clone = deep.clone(data);
 
-  it('should return only value paths ending with "name": /.*\\.name$/', function() {
+  it('should throw error if array wildcards are part of the path argument: bar.*', function() {
+    var clone = deep.clone(data);
 
-    var paths = deep.select(clone, /.*\.name$/);
-
-    expect(paths).to.deep.equal([
-      'countries.germany.towns.berlin.name',
-      'countries.germany.towns.hamburg.name',
-      'countries.spain.towns.0.name',
-      'countries.spain.towns.1.name'
-    ]);
+    expect(deep.select.bind(this,clone, 'bar.*')).to.throw(errorCodes.WILDCARDS_NOT_ALLOWED);
   });
 
-  it('should return only value paths ending with "name" from substructure: /.*\\.name$/', function() {
+  it('should return a deep value', function() {
+    var capital = deep.select(clone, 'countries.germany.towns.capital');
+    expect(capital).to.equal('berlin');
+  });
 
-    var paths = deep.select(clone, /.*\.name$/, 'countries.germany');
+  it('should return a deep array element', function() {
+    var capital = deep.select(clone, 'countries.spain.sites.0');
+    expect(capital).to.equal('Alhambra');
+  });
 
-    expect(paths).to.deep.equal([
-      'towns.berlin.name',
-      'towns.hamburg.name'
-    ]);
+  it('should return a deep value in an array element', function() {
+    var capital = deep.select(clone, 'countries.spain.towns.0.name');
+    expect(capital).to.equal('Madrid');
+  });
+
+  it('should return deep structures', function() {
+    var levels = ['countries', 'germany', 'towns', 'capital'];
+
+    levels.forEach(function (level, index) {
+      var path    = levels.slice(0, index + 1).join('.');
+
+      var value   = deep.select(clone, path);
+      var control = deep.select(data, path);
+
+      expect(value).to.deep.equal(control);
+    });
+  });
+
+  it('should return undefined for unknown deep values', function() {
+    var levels = ['fully', 'unknown', 'deep', 'value'];
+    levels.forEach(function (level, index) {
+      var path  = levels.slice(0, index + 1).join('.');
+      var value = deep.select(clone, path);
+
+      expect(value).to.equal(undefined);
+    });
   });
 });
