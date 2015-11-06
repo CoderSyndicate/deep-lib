@@ -405,6 +405,9 @@ deep.select(a); // => {foo: {hello: 'world'}, some: 'thing'};
 deep.select(a, 'foo'); // => {hello: 'world'}
 deep.select(a, 'foo.hello'); // => 'world'
 deep.select(a, 'foo.bad'); // => undefined
+
+// with offset
+deep.select(a, 'hello', 'foo'); // => 'world'
 ```
 <a name="deep-lib.update"></a>
 ### deep-lib.update(object, path, value, [offset], [ignoreUnknownProperties])
@@ -427,15 +430,14 @@ The method will do nothing if the provided value is `undefined`
 **Example**  
 ```js
 var deep = require('deep-lib');
-var a    = {foo: {hello: 'world'}};
+var a    = {foo: {hello: 'world'}, bar: ['one', 'two']};
 
-deep.update(a, 'foo.*.hello', 'mundo');         // array wildcard   => error;
-deep.update(a, 'ciao', 'mondo');                // unknown property => error;
-deep.update(a, 'ciao', 'mondo', true);          // unknown property => silent fail, no change;
-deep.create(a, 'some.deep.path.hallo', 'Welt'); // unknown property => error;
-deep.create(a, 'foo.hallo');                    // no value         => no change;
-deep.create(a, 'foo.hallo', 'developer');       // update           => success;
-deep.create(a.foo, 'hallo', 'developer');       // update           => success;
+deep.update(a, 'foo.hallo');              // no value         => no change;
+deep.update(a, 'foo.hallo', 'developer'); // update           => success;
+deep.update(a, 'bar.1', 'mundo');         // update           => success;
+deep.update(a, 'bar.*', 'mundo');         // array wildcard   => error;
+deep.update(a, 'ciao', 'mondo');          // unknown property => error;
+deep.update(a, 'ciao', 'mondo', true);    // unknown property => silent fail, no change;
 ```
 <a name="DefinePropertyOptions"></a>
 ## DefinePropertyOptions : <code>Object</code>
