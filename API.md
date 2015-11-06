@@ -27,19 +27,19 @@ All provided methods accept a `path` and/or an `offset` arguments referencing so
 **Example**  
 ```js
 // path: 'foo'
-// |root |referenced substructure
+// ↙root ↙referenced substructure
   {foo: {hello: 'world'}, hello: 'Mundo'};
 
 // path: 'hello'
-// |root                          |referenced value
+// ↙root                          ↙referenced value
   {foo: {hello: 'world'}, hello: 'Mundo'};
 
 // path: 'foo.hello'
-// |root         |referenced value
+// ↙root         ↙referenced value
   {foo: {hello: 'world'}, hello: 'Mundo'};
 
 // path: 'hello' & offset: 'foo'
-//       |root   |referenced value
+//       ↙root   ↙referenced value
   {foo: {hello: 'world'}, hello: 'Mundo'};
 ```
 
