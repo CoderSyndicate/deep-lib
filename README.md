@@ -9,7 +9,8 @@
 [![David](https://img.shields.io/david/CoderSyndicate/deep-lib.svg?style=flat)](https://david-dm.org/CoderSyndicate/deep-lib)
 [![David](https://img.shields.io/david/dev/CoderSyndicate/deep-lib.svg?style=flat)](https://david-dm.org/CoderSyndicate/deep-lib#info=devDependencies)
 
-Enables to manipulate data and its substructures using dot separated property paths.
+Enables to manipulate data and its substructures using dot separated property paths and
+methods to create, update, delete, select, move, search, check equality, check diff, ... (see [API.md](API.md))
 
 
 ## Installation
@@ -20,78 +21,25 @@ Execute following line
 
     npm install deep-lib --save
 
-
-### Require module
-
-    var deep = require('deep-lib');
-
-
 ## Usage
 
-All provided methods accept a `path` property referencing some substructure/value in the data.
-If `path` is provided, the called method will be applied to the referenced substructure.
+All provided methods accept a `path` and/or an `offset` arguments referencing some substructure or value in the data.
+
+- If `path` is provided, it references the object that will be processed.
+- If `offset` is provided, it sets the root point in the object for the resolving of the `path` argument.
 
 The full API documentation can be found in the [API.md](API.md)
 
-### clone
-
-Clones the referenced substructure/value.
-If no `path` is provided, the whole object is cloned.
-
-### select
-
-Returns the referenced substructure/value or undefined if it was not found.
-
-### defineProperty
-
-Makes [Object.defineProperty()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) available to deep referencing.
-
-Adds a new substructure/value to the location specified with the `path`.
-If structures in the `path` do not exist, the method will create them in order to fulfil the task.
-
-### create
-
-Adds a new substructure/value to the location specified with the `path`.
-If structures in the `path` do not exist, the method will create them in order to fulfil the task.
-
-### update
-
-Adds a new substructure/value to the location specified with the `path`.
-
-### move
-
-Moves a substructure/value to a new `path` without breaking the object reference.
-
-### delete
-
-Deletes the referenced property, returning its value or undefined if it was not found.
-
-### equal
-
-Uses the [deep-equal](https://www.npmjs.com/package/deep-equal) package.
-
-Returns true if the compared objects strictly equals each other.
-
-### diff
-
-Uses the [deep-diff](https://www.npmjs.com/package/deep-diff) package.
-
-### createPaths
-
-Create the object hierarchy if needed.
-
-### getPaths
-
-Returns all available paths to all values in the object.
-
-### tools.parent
-
-Returns the parent part of a path (like unix dirname).
-
-### tools.property
-
-Returns the property part of a path (like unix basename).
-
+    var deep = require('deep-lib');
+    var a    = {foo: {hello: 'world'}, some: 'thing'};
+    
+    deep.select(a);                 // => {foo: {hello: 'world'}, some: 'thing'};
+    deep.select(a, 'foo');          // => {hello: 'world'}
+    deep.select(a, 'foo.hello');    // => 'world'
+    deep.select(a, 'foo.bad');      // => undefined
+    
+    // with offset
+    deep.select(a, 'hello', 'foo'); // => 'world'
 
 
 -------------------

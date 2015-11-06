@@ -48,6 +48,18 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
     }
   });
 
+  it('should support the "offset" argument', function() {
+    var clone = deep.clone(data);
+
+    var realPath = deep.create(clone, 'sites.*', 'Gibraltar', 'countries.spain');
+
+    var diff = diffLib(data, clone);
+
+    expect(clone).to.not.deep.equal(data);
+    expect(diff).to.deep.equal([{"kind":"A","path":["countries","spain","sites"],"index":2,"item":{"kind":"N","rhs":"Gibraltar"}}]);
+    expect(realPath).to.deep.equal('countries.spain.sites.2');
+  });
+
   var clone = deep.clone(data);
   var paris = {
     "name": "Paris",

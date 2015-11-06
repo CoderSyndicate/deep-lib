@@ -97,4 +97,16 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - upd
             [{"kind":"E","path":["planet"],"lhs":"Earth","rhs":"Mars"}]
         );
     });
+
+    it('should support the "offset" argument', function() {
+        var clone = deep.clone(data);
+
+        deep.update(clone, 'sites.1', 'Mojacar', 'countries.spain');
+
+        var diff = diffLib(data, clone);
+        console.log(JSON.stringify(diff));
+
+        expect(clone).to.not.deep.equal(data);
+        expect(diff).to.deep.equal([{"kind":"E","path":["countries","spain","sites",1],"lhs":"Cabo de Gata","rhs":"Mojacar"}]);
+    });
 });

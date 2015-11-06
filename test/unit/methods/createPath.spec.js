@@ -33,7 +33,7 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - cre
         }
         else {
 
-          var realPath = deep.createPath(clone, test.path, test.force, test.offset);
+          var realPath = deep.createPath(clone, test.path, test.offset, test.force);
 
           var diff = diffLib(data, clone);
 
