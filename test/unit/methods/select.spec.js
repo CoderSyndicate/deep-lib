@@ -50,6 +50,13 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - sel
     });
   });
 
+  it('should support the "offset" argument', function() {
+    var value   = deep.select(clone, 'sites.1', 'countries.spain');
+    var control = deep.select(data, 'countries.spain.sites.1');
+
+    expect(value).to.deep.equal(control);
+  });
+
   it('should return undefined for unknown deep values', function() {
     var levels = ['fully', 'unknown', 'deep', 'value'];
     levels.forEach(function (level, index) {

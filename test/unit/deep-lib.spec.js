@@ -10,4 +10,3 @@
 var expect   = require('chai').expect;
 var deep     = require('../../lib/deep-lib');
 var data     = require('../object.json');
-

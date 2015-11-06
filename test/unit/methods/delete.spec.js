@@ -8,6 +8,7 @@
 "use strict";
 
 var expect   = require('chai').expect;
+var diffLib  = require('deep-diff');
 var deep     = require('../../../lib/deep-lib');
 var data     = require('../../object.json');
 
@@ -48,6 +49,18 @@ describe('[' + __filename.substring(__filename.indexOf('/test/') + 1) + '] - del
     });
 
     expect(control).to.equal(undefined);
+  });
+
+  it('should support the "offset" argument', function() {
+    var clone = deep.clone(data);
+
+    var value = deep.delete(clone, 'sites.1', 'countries.spain');
+
+    var diff = diffLib(data, clone);
+
+    expect(clone).to.not.deep.equal(data);
+    expect(diff).to.deep.equal([{"kind":"A","path":["countries","spain","sites"],"index":1,"item":{"kind":"D","lhs":"Cabo de Gata"}}]);
+    expect(value).to.deep.equal('Cabo de Gata');
   });
 
   it('should return undefined for unknown deep values', function() {
